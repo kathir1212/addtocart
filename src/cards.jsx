@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import shirtImage from './assets/download.jpg';
+
 
 
 function Cards({ sendDataToParent } ) {
@@ -72,7 +74,7 @@ function Cards({ sendDataToParent } ) {
               return (
  
                 <div key={index} className=" w-[100%] p-[4%] shadow-lg">
-                <img  className="w-[100%]" src={product.avatar}/>
+                <img  className="w-[100%]" src={shirtImage}/>
 
         <div>
         <h1>{product.name}</h1>
@@ -102,40 +104,7 @@ function Cards({ sendDataToParent } ) {
             })}
           </div>
         </div>
-        {/* <div className="w-1/5 p-6 bg-white shadow-lg">
-          <h2 className="mb-4 text-xl font-bold">Shopping Cart</h2>
-          <div className="space-y-4">
-            {cart.map((item, index) => {
-              console.log(cart,"cart>>>>>>>CARTS");
-              
-              return (
-                <div key={index} className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-gray-600">Rs.{item.price}</p>
-                  </div>
-                  <button onClick={() => {
-                    removeCart(item,index)
-                  }} className="text-red-500 hover:text-red-700">
-                    Remove
-                  </button>
-                </div>
-              );
-            })}
-  <div>
-    <h1>{total}</h1>
-  </div>
-  
-  
-    
-
         
-        
- </div>
- 
-
- </div> */}
-
 
 
  
