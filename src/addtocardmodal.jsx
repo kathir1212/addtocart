@@ -82,7 +82,7 @@ function Addtocardmodal(props) {
               return (
                 <div key={index} className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium">{item.name}</p>
+                    <p className="font-medium">{item.title}</p>
                     <p className="text-gray-600">Rs.{item.price}</p>
                   </div>
                   <button onClick={() => {
