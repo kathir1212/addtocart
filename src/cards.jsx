@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import shirtImage from './assets/download.jpg';
-
 
 
 function Cards({ sendDataToParent } ) {
@@ -11,12 +9,21 @@ function Cards({ sendDataToParent } ) {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
+  const [cartStatus, setCartStatus] = useState({});
+
+
+
 
   let fetchProducts = async () => {
     const productsData = await fetch(
-      "https://67825d58c51d092c3dcf37cf.mockapi.io/addtocart"
+      "https://fakestoreapi.com/products"
     );
+
+
+
     const productResponse = await productsData.json();
+
+    
     setProducts(productResponse);
   };
 
@@ -24,34 +31,44 @@ function Cards({ sendDataToParent } ) {
 
   
 
-  let addToCart = (product) => {
+  let addToCart = (product , index) => {
+    
     setCart((prevCart) => {
+      
+     
       const updatedCart = [...prevCart, product];
-      console.log(updatedCart, ">>> Updated Cart");
       sendDataToParent(updatedCart, total + parseInt(product.price));
-      return updatedCart; // Update the cart state
+
+      
+      return updatedCart; 
     });
   
     setTotal((prevTotal) => {
       const updatedTotal = prevTotal + parseInt(product.price);
-      console.log(updatedTotal, ">>> Updated Total");
-      return updatedTotal; // Update the total state
+      return updatedTotal; 
     });
+
+    setCartStatus((prevState) => ({
+      ...prevState,
+      [index]: true,
+    }));
   
   };
+
+  let added = () => {
+alert("card already added please check")
+  }
  
 
 
-  let removeCart = (item,index) => {
-    cart.splice(index,1)
-    setCart([...cart])
-    setTotal(total - parseInt(item.price))
-  }
+  
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
+
+  
         
  
   return (
@@ -71,23 +88,32 @@ function Cards({ sendDataToParent } ) {
  
 
 {products.map((product, index) => {
+  
+  
               return (
  
                 <div key={index} className=" w-[100%] p-[4%] shadow-lg">
-                <img  className="w-[100%]" src={shirtImage}/>
+                <img  className="w-[100%]" src={product.image}/>
 
         <div>
-        <h1>{product.name}</h1>
+        <h1>{product.title}</h1>
          <div className="flex">
              <div className="flex-[1] flex items-center">
              <h1>{product.price}</h1>
              </div>
          <div className="flex-[1] flex items-center">
-         <button className=" bg-blue-500 px-[2%] py-[4%] text-white w-[100%]" onClick={()=>{
-           addToCart(product)
-         }}>Add to Cart</button>
+         <button  className={` px-[2%] py-[4%] text-white w-[100%] ${cartStatus[index] ? "bg-green-500" : "bg-blue-500"}`}
+          onClick={()=>{
+          
+          
+          cartStatus[index] ? added() : addToCart(product , index)
+         }}>
+         
+         {cartStatus[index] ? 'added' : 'add to cart'}
+         </button>
 
 
+          
  
          </div>
              
@@ -105,6 +131,7 @@ function Cards({ sendDataToParent } ) {
           </div>
         </div>
         
+
 
 
  
